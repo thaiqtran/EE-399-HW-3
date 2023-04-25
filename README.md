@@ -77,7 +77,7 @@ Loads the MNIST dataset using fetch_openml function and scales the pixel values 
 U shape: (784, 784)
 ```
 
-#### numbner 2
+#### number 2
 ![image](https://user-images.githubusercontent.com/129792715/234149954-2dc2dd6c-b428-4a61-8b4a-c20dc3d7e8ef.png)
 ![image](https://user-images.githubusercontent.com/129792715/234149970-bd1b708c-2789-49c9-915d-44a3cd39ea5e.png)
 
@@ -88,3 +88,54 @@ Based on the cumulative energy plot, the rank (r) of the digit space is determin
 ```
 The rank r of the digit space is 53
 ```
+#### number 3) 
+What is the interpretation of the U, Σ, and V matrices?
+
+Answer: U (Left singular vectors): U is an orthogonal matrix whose columns are the left singular vectors of the data matrix. In this code, U is obtained using svd.fit_transform(X_col). Each column of U represents a reduced-dimensional representation of the original data, where the rows of U are the features (or latent variables) extracted from the data. These left singular vectors represent the directions in the original feature space along which the data varies the most.
+
+Σ (Singular values): Σ is a diagonal matrix containing the singular values, which represent the magnitude of the variation captured by each singular vector. In this code, Σ is obtained using svd.singular_values_. The singular values are sorted in descending order, with the first singular value corresponding to the direction of greatest variation in the data, the second singular value corresponding to the second greatest variation, and so on. The singular values provide information about the importance of each singular vector in capturing the overall variation in the data.
+
+V (Right singular vectors): V is an orthogonal matrix whose rows are the right singular vectors of the data matrix. In this code, V is obtained using svd.components_. Each row of V represents a reduced-dimensional representation of the original features, where the columns of V are the coefficients that map the reduced-dimensional representations back to the original feature space. The right singular vectors represent the contribution of each feature to the original data
+
+#### number 4)
+![image](https://user-images.githubusercontent.com/129792715/234150472-c39debef-87e5-4426-aaec-9004be5faf3e.png)
+
+The code performs Principal Component Analysis (PCA) on the MNIST dataset using the PCA class from sklearn.decomposition module. It then selects three V-modes (columns) from the transformed data, denoted as v_selected. Next, a 3D scatter plot is created using matplotlib's Axes3D module, where the x-axis represents the first selected V-mode, the y-axis represents the second selected V-mode, and the z-axis represents the third selected V-mode. The scatter plot shows the projection of the data points onto the selected V-modes, with different colors representing different digit labels (y). The plot helps visualize the distribution of data points in a reduced-dimensional space.
+Answer: U (Left singular vectors): U is an orthogonal matrix whose columns are the left singular vectors of the data matrix. In this code, U is obtained using svd.fit_transform(X_col). Each column of U represents a reduced-dimensional representation of the original data, where the rows of U are the features (or latent variables) extracted from the data. These left singular vectors represent the directions in the original feature space along which the data varies the most.
+
+### Problem set 2
+#### number 1)
+Using Linear Discriminant Analysis (LDA) on the PCA transformed data for two digits (3 and 8) from the MNIST dataset. It combines the PCA transformed data for the two digits and splits it into training and testing sets. Then, it trains an LDA classifier using the training set and predicts the labels for the testing set. Finally, it calculates and prints the accuracy of the LDA classifier in percentage, which represents the percentage of correct predictions on the testing set
+```
+Accuracy: 96.13%
+```
+#### number 2)
+Performs digit classification using Linear Discriminant Analysis (LDA) on the PCA transformed data for three digits (3, 8, and 0) from the MNIST dataset. It combines the PCA transformed data for the three digits and splits it into training and testing sets. Then, it trains an LDA classifier using the training set and predicts the labels for the testing set. Finally, it calculates and prints the accuracy of the LDA classifier in percentage, which represents the percentage of correct predictions on the testing set.
+```
+Accuracy: 95.64%
+```
+#### number 3&4
+
+```
+Most Difficult Pair: Digit 5 and Digit 8: Accuracy = 0.9498
+Easiest Pair: Digit 6 and Digit 7: Accuracy = 0.9969
+```
+
+#### number 5
+The SVM classifier achieved an accuracy of 0.9764 on the test data, while the Decision Tree classifier achieved an accuracy of 0.8708. This suggests that the SVM classifier performed better in terms of accuracy on the given dataset. Further analysis and evaluation, such as cross-validation, hyperparameter tuning, and model comparison, could be performed for a more comprehensive assessment of the classifiers' performance and to select the best model for the task. It's important to note that actual accuracy values may vary depending on the specific dataset and train-test split used, and further evaluation is recommended for robust conclusions.
+
+#### number 6
+The performance of three classifiers, Linear Discriminant Analysis (LDA), Support Vector Machine (SVM), and Decision Tree, was evaluated on two pairs of classes - a hard pair and an easy pair - using the accuracy metric. Among these classifiers, SVM consistently outperformed the other classifiers in terms of accuracy for both the hard and easy pairs of classes. These results suggest that SVM is a promising classifier for the given dataset. However, further evaluation and comparison with other performance metrics and techniques would be necessary for a comprehensive assessment of the classifiers' performance.
+
+```
+Accuracy of LDA on hard pair: 0.9606
+Accuracy of SVM on hard pair: 0.9890
+Accuracy of Decision Tree on hard pair: 0.9525
+Accuracy of LDA on easy pair: 0.9887
+Accuracy of SVM on easy pair: 0.9961
+Accuracy of Decision Tree on easy pair: 0.9878
+Accuracy of LDA on easy pair: 0.9887
+```
+
+## Sec. V Conclusion
+In this project, we analyzed the MNIST dataset using Singular Value Decomposition (SVD) to gain insights into the structure of digit images. We examined the singular value spectrum to determine the necessary number of modes for good image reconstruction and interpreted the U, Σ, and V matrices obtained from SVD. We also built linear classifiers, specifically LDA, to identify and classify digits in the training set, and evaluated their performance for different digit pairs. We compared the performance of LDA, SVM, and decision tree classifiers in terms of accuracy and quantified the accuracy of separation for the hardest and easiest digit pairs. The findings from this project provide insights into the effectiveness of different classifiers for identifying digits in the MNIST dataset and shed light on the separability of different digit pairs using various classification techniques. Further research could be conducted to explore other machine learning techniques and algorithms for image classification on the MNIST dataset, and to investigate the performance of classifiers on other datasets with different characteristics.
