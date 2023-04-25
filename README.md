@@ -15,3 +15,6 @@ Classification algorithm that aims to find a linear combination of features that
 
 ### Support Vector Machines (SVM) and decision tree classifiers
 Classification algorithms that have been used extensively for image classification. SVM aims to find the optimal hyperplane that maximally separates different classes, while decision tree classifiers recursively split the data based on the most informative features until the classes are well-separated.
+
+## Sec. III. Algorithm Implementation and Development
+
