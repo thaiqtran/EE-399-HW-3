@@ -9,6 +9,8 @@ The MNIST dataset, a widely used benchmark in the field of machine learning, con
 
 ### Singular Value Decomposition (SVD)
 Mathematical technique used to decompose a matrix into a product of three matrices: U, Σ, and V^T (transpose of V). Given an m x n matrix A, SVD can be represented as A = UΣV^T, where U is an m x m orthogonal matrix, Σ is an m x n diagonal matrix containing the singular values of A, and V^T is an n x n orthogonal matrix.
+### Principal Component Analysis (PCA)
+Dimensionality reduction technique commonly used in data analysis and machine learning. It is a statistical method that transforms a high-dimensional dataset into a lower-dimensional representation while retaining as much of the original data's variability as possible.
 
 ### Linear Discriminant Analysis (LDA)
 Classification algorithm that aims to find a linear combination of features that maximally separates different classes. LDA is often used for dimensionality reduction and feature extraction in machine learning, as it can project high-dimensional data onto a lower-dimensional space while preserving the class separability. In the context of image classification, LDA can be used to identify and classify digits in the MNIST dataset based on their features.
@@ -18,3 +20,71 @@ Classification algorithms that have been used extensively for image classificati
 
 ## Sec. III. Algorithm Implementation and Development
 
+### Singular Value Decomposition (SVD)
+used to perform dimensionality reduction on the MNIST dataset, which consists of images of handwritten digits.
+```
+# Load the MNIST data
+mnist = fetch_openml('mnist_784', parser='auto')
+X, y = mnist.data, mnist.target
+X = X / 255.0  # Scale the pixel values to [0, 1]
+# Reshape each image into a column vector
+X_col = X.T
+U, Sigma, Vt = np.linalg.svd(X_col, full_matrices=False)
+```
+### Principal Component Analysis (PCA)
+used in the implementation as a technique for dimensionality reduction. It was applied on the MNIST dataset to reduce the high-dimensional image data to a lower-dimensional representation while preserving the most important information in the data.
+
+```
+# Perform PCA
+pca = PCA(n_components=784)
+X_pca = pca.fit_transform(X)
+```
+### Linear Discriminant Analysis (LDA)
+used as a technique for dimensionality reduction and feature extraction, followed by classification. It was applied on the reduced-dimensional data obtained from PCA to further reduce the feature space and enhance the discriminative power of the data for classification.
+
+```
+# Train LDA classifier
+lda = LDA()
+lda.fit(X_train, y_train)
+# Predict on the testing set
+y_pred = lda.predict(X_test)
+```
+
+### Support Vector Machines (SVM) and decision tree classifiers
+used as the classification algorithms on the transformed data obtained from PCA and LDA
+```
+# Initialize SVM classifier
+svm = SVC()
+# Initialize Decision Tree classifier
+dtc = DecisionTreeClassifier()
+# Train SVM classifier
+svm.fit(X_train, y_train)
+# Train Decision Tree classifier
+dtc.fit(X_train, y_train)
+# Predict on test data using SVM
+y_pred_svm = svm.predict(X_test)
+# Predict on test data using Decision Tree
+y_pred_dtc = dtc.predict(X_test)
+# Calculate accuracy for SVM
+accuracy_svm = accuracy_score(y_test, y_pred_svm)
+```
+
+## Sec. IV. Computational Results
+### Problem set 1 
+#### number 1
+Loads the MNIST dataset using fetch_openml function and scales the pixel values of the images to [0, 1]. The images are reshaped into column vectors and then subjected to Singular Value Decomposition (SVD) using np.linalg.svd function. The resulting U, Sigma, and Vt matrices represent the left singular vectors, singular values, and right singular vectors, respectively. The full_matrices parameter is set to False, indicating reduced dimensions. The shape of the U matrix is printed using a print statement.
+```
+U shape: (784, 784)
+```
+
+#### numbner 2
+![image](https://user-images.githubusercontent.com/129792715/234149954-2dc2dd6c-b428-4a61-8b4a-c20dc3d7e8ef.png)
+![image](https://user-images.githubusercontent.com/129792715/234149970-bd1b708c-2789-49c9-915d-44a3cd39ea5e.png)
+
+The first plot shows the singular values of the dataset, with the x-axis representing the index of the singular value and the y-axis representing the value of the singular value. The second plot shows the cumulative sum of the squared singular values, normalized by the sum of squared singular values, with the x-axis representing the number of modes (singular values) and the y-axis representing the cumulative energy.
+
+Based on the cumulative energy plot, the rank (r) of the digit space is determined as the index at which the cumulative energy exceeds or equals 0.9. This value of r is printed using the print statement. The rank indicates the number of singular values needed to capture 90% of the energy in the dataset.
+
+```
+The rank r of the digit space is 53
+```
